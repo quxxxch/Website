@@ -4,7 +4,7 @@ const app = require('../index'); // Adjust the path as necessary
 describe('Express App', () => {
   it('should serve static files from public_html', async () => {
     const res = await request(app)
-      .get('/') // Assuming you have an index.html in public_html
+      .get('/')
       .expect('Content-Type', /html/)
       .expect(200);
     expect(res.text).toContain(''); // Check for specific content in your index.html if needed
