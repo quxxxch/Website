@@ -10,15 +10,15 @@ pipeline {
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
                 echo 'Build'
-                bat 'docker build -t tomledeakin/boilerplate:latest -f Dockerfile .'
+                sh 'docker build -t boilerplate:latest -f Dockerfile .'
           
             }
         }
     
         stage('Test') {
             steps {
-                // sh './jenkins/scripts/test.sh'
-                sh 'npm test'
+                sh './jenkins/scripts/test.sh'
+                // sh 'npm test'
 
             }
         }
