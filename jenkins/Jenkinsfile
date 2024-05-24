@@ -9,6 +9,7 @@ pipeline {
                 sh 'npm install --save express'
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
+                sh 'npm install --save-dev webpack webpack-cli'
                 sh 'npm run build'
                 archiveArtifacts artifacts: 'build/**/*.jar', allowEmptyArchive: true
           
