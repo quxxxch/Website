@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app'); // Adjust the path as necessary
+const app = require('../index'); // Adjust the path as necessary
 
 describe('Express App', () => {
   it('should serve static files from public_html', async () => {
