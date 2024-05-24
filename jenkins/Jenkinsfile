@@ -10,11 +10,15 @@ pipeline {
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
                 sh 'npm install --save-dev webpack webpack-cli'
-                // sh 'npm run build'
-                sh './gradlew build'
+                git branch: 'master', url: 'https://github.com/quxxxch/Website'
+
+                echo 'Build'
+                bat 'docker build -t tomledeakin/boilerplate:latest -f Dockerfile .'
+                bat 'npm install'
           
             }
         }
+    
         stage('Test') {
             steps {
                 // sh './jenkins/scripts/test.sh'
