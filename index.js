@@ -30,11 +30,25 @@ function normalizePort(val) {
 // Tell our application to serve all the files under the `public_html` directory
 app.use(express.static('public_html'))
 
-// Tell our application to listen to requests at port 3000 on the localhost
-app.listen(port, function () {
-  // When the application starts, print to the console that our app is
-  // running at http://localhost:3000  (where the port number is 3000 by
-  // default). Print another message indicating how to shut the server down.
-  console.log(`Web server running at: http://localhost:${port}`)
-  console.log("Type Ctrl+C to shut down the web server")
-})
+// // Tell our application to listen to requests at port 3000 on the localhost
+// app.listen(port, function () {
+//   // When the application starts, print to the console that our app is
+//   // running at http://localhost:3000  (where the port number is 3000 by
+//   // default). Print another message indicating how to shut the server down.
+//   console.log(`Web server running at: http://localhost:${port}`)
+//   console.log("Type Ctrl+C to shut down the web server")
+// })
+
+
+// Start the server if this file is run directly
+if (require.main === module) {
+  app.listen(port, function () {
+    // When the application starts, print to the console that our app is
+    // running at http://localhost:3000  (where the port number is 3000 by
+    // default). Print another message indicating how to shut the server down.
+    console.log(`Web server running at: http://localhost:${port}`)
+    console.log("Type Ctrl+C to shut down the web server")
+  });
+}
+
+module.exports = app;
