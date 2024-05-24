@@ -10,7 +10,7 @@ pipeline {
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
                 sh 'npm run build'
-                archiveArtifacts artifacts: '**/*.jar', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'build/**/*.jar', allowEmptyArchive: true
           
             }
         }
