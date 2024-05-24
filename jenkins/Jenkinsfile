@@ -9,7 +9,9 @@ pipeline {
                 sh 'npm install --save express sqlite3'
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
-
+ // Archive build artifacts (e.g., JAR files, binaries, or any build output)
+                archiveArtifacts artifacts: 'build/**/*', allowEmptyArchive: true
+          
             }
         }
         stage('Test') {
