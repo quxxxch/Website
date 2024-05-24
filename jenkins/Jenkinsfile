@@ -9,14 +9,16 @@ pipeline {
                 sh 'npm install --save express'
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
- // Archive build artifacts (e.g., JAR files, binaries, or any build output)
-                archiveArtifacts artifacts: '**/*', allowEmptyArchive: true
+                sh 'npm run build'
+                archiveArtifacts artifacts: 'build/**/*.jar', allowEmptyArchive: true
           
             }
         }
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                // sh './jenkins/scripts/test.sh'
+                sh 'npm test'
+
             }
         }
         stage('Deliver') { 
