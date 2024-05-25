@@ -6,7 +6,6 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                echo 'Build'
                 sh 'docker build -f Dockerfile -t website:latest .'
 
             }
@@ -18,6 +17,12 @@ pipeline {
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
                 sh 'npm run test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d -it --rm -p 3000:3000 --name my_website website:latest'
             }
         }
     }
