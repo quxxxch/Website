@@ -7,6 +7,7 @@ pipeline {
         stage('SonarQube analysis') {
           steps {
             sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH'
+            sh 'java -version'
             script {
                 scannerHome = tool 'sonar-scanner'
             }
