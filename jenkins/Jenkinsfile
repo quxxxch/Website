@@ -9,16 +9,17 @@ pipeline {
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
                 echo 'Build'
-                sh 'docker build -t boilerplate:latest -f Dockerfile .'
+                sh 'docker build -f Dockerfile -t website:latest .'
           
             }
         }
     
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                sh 'npm run test'
             }
         }
+
         stage('Code Quality Analysis') {
             steps {
                 echo 'configure Jenkins to run code quality analysis on
@@ -36,6 +37,7 @@ deployment tool of your choice, such as Docker Compose or AWS Elastic Beanstalk.
 
             }
         }
+
         stage('Release') {
             steps {
                 echo 'configure Jenkins to promote the application to a production
@@ -47,9 +49,10 @@ Octopus Deploy or AWS CodeDeploy.'
         // Deliver lấy từ ví dụ trên mạng
         stage('Deliver') { 
             steps {
-                sh './jenkins/scripts/deliver.sh' 
-                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                sh './jenkins/scripts/kill.sh' 
+//                 sh './jenkins/scripts/deliver.sh'
+//                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
+//                 sh './jenkins/scripts/kill.sh'
+                echo 'Deliver'
             }
         }
 
@@ -62,10 +65,10 @@ the application in production for any issues and alert the team if any issues ar
             }
         }
     }   
-    post {
-        always {
-            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-            // junit 'build/reports/**/*.xml'
-        }
-    }
+//     post {
+//         always {
+//             archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+//             // junit 'build/reports/**/*.xml'
+//         }
+//     }
 }
