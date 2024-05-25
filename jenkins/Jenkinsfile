@@ -5,70 +5,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo 'Build'
+                sh 'docker build -f Dockerfile -t website:latest .'
+
+            }
+        }
+
+        stage('Test') {
+            steps {
                 sh 'npm install --save express'
                 sh 'npm install --save-dev jest'
                 sh 'npm install --save-dev supertest'
-                echo 'Build'
-                sh 'docker build -f Dockerfile -t website:latest .'
-          
-            }
-        }
-    
-        stage('Test') {
-            steps {
                 sh 'npm run test'
             }
         }
-
-        stage('Code Quality Analysis') {
-            steps {
-                echo 'configure Jenkins to run code quality analysis on
-your code. You can choose a code quality analysis tool, such as SonarQube or
-CodeClimate, and configure it to automatically analyse your code for issues such as
-code duplication, code smells, and security vulnerabilities.'
-            }
-        }
-       
-        stage('Deploy') {
-            steps {
-                echo 'deploy your application to a test
-environment, such as a staging server or a Docker container. You can use any
-deployment tool of your choice, such as Docker Compose or AWS Elastic Beanstalk.'
-
-            }
-        }
-
-        stage('Release') {
-            steps {
-                echo 'configure Jenkins to promote the application to a production
-environment. You can use any release management tool of your choice, such as
-Octopus Deploy or AWS CodeDeploy.'
-            }
-        }
-
-        // Deliver lấy từ ví dụ trên mạng
-        stage('Deliver') { 
-            steps {
-//                 sh './jenkins/scripts/deliver.sh'
-//                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
-//                 sh './jenkins/scripts/kill.sh'
-                echo 'Deliver'
-            }
-        }
-
-        stage('Monitoring and Alerting') {
-            steps {
-                echo 'monitor the application in
-production for any issues and alert the team if any issues arise. You can choose a
-monitoring and alerting tool, such as Datadog or New Relic, and configure it to monitor
-the application in production for any issues and alert the team if any issues arise.'
-            }
-        }
-    }   
-//     post {
-//         always {
-//             archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-//             // junit 'build/reports/**/*.xml'
-//         }
-//     }
+    }
 }
