@@ -11,7 +11,7 @@ pipeline {
                 scannerHome = tool 'sonar-scanner'
             }
             withSonarQubeEnv('sonar-server') {
-              sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
+              sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
             }
           }
         }
