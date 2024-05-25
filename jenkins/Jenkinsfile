@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                sh 'docker build -f Dockerfile -t website:latest .'
+                sh 'docker build -f Dockerfile -t quxxxch/website:latest .'
 
             }
         }
