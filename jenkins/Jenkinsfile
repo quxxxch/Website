@@ -4,20 +4,21 @@ pipeline {
 
     stages {
 
-        stage('SonarQube analysis') {
-          steps {
-            script {
-                scannerHome = tool 'sonar-scanner'
-            }
-            withSonarQubeEnv('sonarqube-server') {
-              sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
-            }
-          }
-        }
+//         stage('SonarQube analysis') {
+//           steps {
+//             script {
+//                 scannerHome = tool 'sonar-scanner'
+//             }
+//             withSonarQubeEnv('sonarqube-server') {
+//               sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
+//             }
+//           }
+//         }
 
         stage('Build') {
             agent any
             steps {
+                which docker
                 sh 'docker build -f Dockerfile -t website:latest .'
 
             }
