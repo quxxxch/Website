@@ -25,10 +25,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '/usr/local/bin/node install --save express'
-                sh '/usr/local/bin/node install --save-dev jest'
-                sh '/usr/local/bin/node install --save-dev supertest'
-                sh '/usr/local/bin/node run test'
+                sh '/usr/local/bin/npm install --save express'
+                sh '/usr/local/bin/npm install --save-dev jest'
+                sh '/usr/local/bin/npm install --save-dev supertest'
+                sh '/usr/local/bin/npm run test'
             }
         }
 
