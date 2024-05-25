@@ -4,6 +4,7 @@ pipeline {
 
     stages {
         stage('Build') {
+            agent any
             steps {
                 echo 'Build'
                 sh 'docker build -f Dockerfile -t website:latest .'
