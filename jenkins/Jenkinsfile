@@ -25,13 +25,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '/usr/local/bin/docker run -it --rm website:latest npm test'
+                sh '/usr/local/bin/docker run --rm website:latest npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -it --rm -p 3000:3000 --name my_website website:latest'
+                sh 'docker run -d --rm -p 3000:3000 --name my_website website:latest'
             }
         }
     }
