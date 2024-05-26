@@ -4,18 +4,6 @@ pipeline {
 
     stages {
 
-        stage('SonarQube analysis') {
-          steps {
-            sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
-            script {
-                scannerHome = tool 'sonar-scanner'
-            }
-            withSonarQubeEnv('sonar-server') {
-              sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
-            }
-          }
-        }
-
         stage('Build') {
             agent any
             steps {
@@ -28,6 +16,18 @@ pipeline {
             steps {
                 sh '/usr/local/bin/docker run --rm website:latest npm test'
             }
+        }
+        
+        stage('SonarQube analysis') {
+          steps {
+            sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
+            script {
+                scannerHome = tool 'sonar-scanner'
+            }
+            withSonarQubeEnv('sonar-server') {
+              sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
+            }
+          }
         }
 
         stage('Deploy') {
