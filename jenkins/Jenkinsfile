@@ -30,9 +30,19 @@ pipeline {
           }
         }
 
+        // stage('Deploy') {
+        //     steps {
+        //         sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
+        //     }
+        // }
         stage('Deploy') {
             steps {
-                sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
+                script {
+                    withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                        docker.image('website:latest').push()
+                    }
+                }
+
             }
         }
     }
