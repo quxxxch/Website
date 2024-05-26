@@ -35,15 +35,25 @@ pipeline {
         //         sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
         //     }
         // }
+
         stage('Deploy') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-                        docker.image('quxch/website:latest').push()
-                    }
+                    // Deploy to a test environment using Docker Compose
+                    echo 'Deploying to test environment...'
+                    sh 'docker-compose -f docker-compose.yml up -d'
                 }
-
             }
         }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+        //                 docker.image('quxch/website:latest').push()
+        //             }
+        //         }
+
+        //     }
+        // }
     }
 }
