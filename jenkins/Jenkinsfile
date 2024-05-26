@@ -4,56 +4,37 @@ pipeline {
 
     stages {
 
-        stage('Build') {
-            agent any
-            steps {
-                sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
-
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh '/usr/local/bin/docker run --rm website:latest npm test'
-            }
-        }
-        
-        stage('SonarQube analysis') {
-          steps {
-            sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
-            script {
-                scannerHome = tool 'sonar-scanner'
-            }
-            withSonarQubeEnv('sonar-server') {
-              sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
-            }
-          }
-        }
-
-        // stage('Deploy') {
+        // stage('Build') {
+        //     agent any
         //     steps {
-        //         sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
+        //         sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
+
         //     }
+        // }
+
+        // stage('Test') {
+        //     steps {
+        //         sh '/usr/local/bin/docker run --rm website:latest npm test'
+        //     }
+        // }
+        
+        // stage('SonarQube analysis') {
+        //   steps {
+        //     sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
+        //     script {
+        //         scannerHome = tool 'sonar-scanner'
+        //     }
+        //     withSonarQubeEnv('sonar-server') {
+        //       sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
+        //     }
+        //   }
         // }
 
         stage('Deploy') {
             steps {
-                script {
-                    // Deploy to a test environment using Docker Compose
-                    echo 'Deploying to test environment...'
-                    sh 'docker-compose -f docker-compose.yml up -d'
-                }
+                sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         script {
-        //             withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-        //                 docker.image('quxch/website:latest').push()
-        //             }
-        //         }
 
-        //     }
-        // }
     }
 }
