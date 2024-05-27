@@ -3,6 +3,8 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub_id')
+        OCTOPUS_API_KEY = credentials('octopus_api_key')
+        OCTOPUS_SERVER_URL = 'https://quxch.octopus.app/'
     }
     stages {
 
@@ -48,6 +50,24 @@ pipeline {
                     sh 'export PATH=$PATH:/usr/local/bin && docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW'
                     sh 'export PATH=$PATH:/usr/local/bin && docker tag website:latest quxch/website:latest'
                     sh 'export PATH=$PATH:/usr/local/bin && docker push quxch/website:latest'
+                }
+            }
+        }
+        stage('Release') {
+            steps {
+                script {
+                    octopusDeploy(
+                        additionalArgs: '',
+                        cancelOnTimeout: false,
+                        credentialsId: 'octopus_api_key',
+                        environment: 'Production',
+                        project: 'website',
+                        releaseVersion: '1.0.${BUILD_NUMBER}',
+                        spaceId: 'Spaces-1',
+                        tenant: '',
+                        tenantTag: '',
+                        toolId: 'Default'
+                    )
                 }
             }
         }
