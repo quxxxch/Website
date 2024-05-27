@@ -56,8 +56,8 @@ pipeline {
                 script {
                     sh '''
                     /usr/local/bin/octopus release create \
-                        --server "https://quxch.octopus.app/" \
-                        --apikey "API-JZFPOQTJYYYXLSP7IAR9NR0EGAJ7TWO" \
+                        --server https://quxch.octopus.app/ \
+                        --apikey API-JZFPOQTJYYYXLSP7IAR9NR0EGAJ7TWO \
                         --project "website" \
                         --version "1.0.${BUILD_NUMBER}" \
                         --deployto "Production" \
