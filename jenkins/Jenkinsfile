@@ -50,22 +50,19 @@ pipeline {
         //     }
         // }
 
-         stage('Release') {
+        stage('Release') {
             steps {
+                echo 'Releasing to Octopus Deploy...'
                 script {
-                    echo "hello"
-                    octopusDeploy(
-                        additionalArgs: '',
-                        cancelOnTimeout: false,
-                        credentialsId: 'octopus_api_key',
-                        environment: 'Production',
-                        project: 'website',
-                        releaseVersion: '1.0.${BUILD_NUMBER}',
-                        spaceId: 'Spaces-1',
-                        tenant: '',
-                        tenantTag: '',
-                        toolId: 'Default'
-                    )
+                    sh '''
+                    /usr/local/bin/octo create-release \
+                        --server $OCTOPUS_SERVER_URL \
+                        --apikey $OCTOPUS_API_KEY \
+                        --project "website" \
+                        --version "1.0.${BUILD_NUMBER}" \
+                        --deployto "Production" \
+                        --progress
+                    '''
                 }
             }
         }
