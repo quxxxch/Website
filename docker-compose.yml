@@ -33,7 +33,16 @@ services:
 #    volumes:
 #      - './data/postgresql/sonarqube_db:/var/lib/postgresql'
 #      - './data/postgresql/postgresql_data:/var/lib/postgresql/data'
-
+ jaeger:
+    image: jaegertracing/all-in-one:${JAEGER_VERSION:-latest}
+    ports:
+      - "16686:16686"
+      - "4318:4318"
+    environment:
+      - LOG_LEVEL=debug
+    networks:
+      - jaeger-example
+      
 networks:
   sonarnet:
     driver: bridge
