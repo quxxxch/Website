@@ -6,18 +6,18 @@ pipeline {
     }
     stages {
 
-        // stage('Build') {
-        //     agent any
-        //     steps {
-        //         sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
-
-        //     }
-        // }
         stage('Build') {
+            agent any
             steps {
-                sh 'export PATH=$PATH:/usr/local/bin && docker build -f Dockerfile -t website:latest .'
+                sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
+
             }
         }
+        // stage('Build') {
+        //     steps {
+        //         sh 'export PATH=$PATH:/usr/local/bin && docker build -f Dockerfile -t website:latest .'
+        //     }
+        // }
 
         // stage('Test') {
         //     steps {
