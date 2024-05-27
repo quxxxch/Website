@@ -76,8 +76,6 @@ pipeline {
                         --project "website" \
                         --releaseNumber "1.0.${BUILD_NUMBER}" \
                         --space 'default' \
-                        --progress \
-                        --ignoreexisting \
                         --package="website:latest"
                    
                     '''
