@@ -6,11 +6,16 @@ pipeline {
     }
     stages {
 
-        stage('Build') {
-            agent any
-            steps {
-                sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
+        // stage('Build') {
+        //     agent any
+        //     steps {
+        //         sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
 
+        //     }
+        // }
+        stage('Build') {
+            steps {
+                sh 'export PATH=$PATH:/usr/local/bin && docker build -f Dockerfile -t website:latest .'
             }
         }
 
@@ -48,12 +53,12 @@ pipeline {
         //         sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
         //     }
         // }
-        stage('Deploy') {
+         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW'
-                    sh 'docker tag website:latest quxch/website:latest'
-                    sh 'docker push quxch/website:latest'
+                    sh 'export PATH=$PATH:/usr/local/bin && docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW'
+                    sh 'export PATH=$PATH:/usr/local/bin && docker tag website:latest quxch/website:latest'
+                    sh 'export PATH=$PATH:/usr/local/bin && docker push quxch/website:latest'
                 }
             }
         }
