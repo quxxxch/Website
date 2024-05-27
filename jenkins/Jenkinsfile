@@ -53,10 +53,11 @@ pipeline {
                 }
             }
         }
-        
+
          stage('Release') {
             steps {
                 script {
+                    echo "hello"
                     octopusDeploy(
                         additionalArgs: '',
                         cancelOnTimeout: false,
