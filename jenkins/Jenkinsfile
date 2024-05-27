@@ -21,38 +21,34 @@ pipeline {
         //     }
         // }
 
-        stage('Test') {
-            steps {
-                sh '/usr/local/bin/docker run --rm website:latest npm test'
-            }
-        }
-        
-        stage('SonarQube analysis') {
-          steps {
-            sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
-            script {
-                scannerHome = tool 'sonar-scanner'
-            }
-            withSonarQubeEnv('sonar-server') {
-              sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
-            }
-          }
-        }
-
-        // stage('Deploy') {
+        // stage('Test') {
         //     steps {
-        //         sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
+        //         sh '/usr/local/bin/docker run --rm website:latest npm test'
         //     }
         // }
-         stage('Deploy') {
-            steps {
-                script {
-                    sh 'export PATH=$PATH:/usr/local/bin && docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW'
-                    sh 'export PATH=$PATH:/usr/local/bin && docker tag website:latest quxch/website:latest'
-                    sh 'export PATH=$PATH:/usr/local/bin && docker push quxch/website:latest'
-                }
-            }
-        }
+        
+        // stage('SonarQube analysis') {
+        //   steps {
+        //     sh 'export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && java -version'
+        //     script {
+        //         scannerHome = tool 'sonar-scanner'
+        //     }
+        //     withSonarQubeEnv('sonar-server') {
+        //       sh "export PATH=/opt/homebrew/Cellar/openjdk/21.0.3/bin:$PATH && ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop"
+        //     }
+        //   }
+        
+
+        //  stage('Deploy') {
+        //     steps {
+        //         script {
+        //             sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
+        //             sh 'export PATH=$PATH:/usr/local/bin && docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW'
+        //             sh 'export PATH=$PATH:/usr/local/bin && docker tag website:latest quxch/website:latest'
+        //             sh 'export PATH=$PATH:/usr/local/bin && docker push quxch/website:latest'
+        //         }
+        //     }
+        // }
 
          stage('Release') {
             steps {
