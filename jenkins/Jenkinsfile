@@ -54,20 +54,20 @@ pipeline {
                 script {
                     sh '''
                     # Pull the latest image from Docker Hub
-                    docker pull quxch/website:latest
+                    export PATH=$PATH:/usr/local/bin && docker pull quxch/website:latest
 
                     # Stop the currently running container (if any)
-                    if [ $(docker ps -q -f name=my_website) ]; then
-                        docker stop my_website
+                    if [ $(export PATH=$PATH:/usr/local/bin && docker ps -q -f name=my_website) ]; then
+                        export PATH=$PATH:/usr/local/bin && docker stop my_website
                     fi
 
                     # Remove the stopped container
-                    if [ $(docker ps -aq -f status=exited -f name=my_website) ]; then
-                        docker rm my_website
+                    if [ $(export PATH=$PATH:/usr/local/bin && docker ps -aq -f status=exited -f name=my_website) ]; then
+                        export PATH=$PATH:/usr/local/bin && docker rm my_website
                     fi
 
                     # Run a new container with the latest image
-                    docker run -d --rm -p 3000:3000 --name my_website quxch/website:latest
+                    export PATH=$PATH:/usr/local/bin && docker run -d --rm -p 3000:3000 --name my_website quxch/website:latest
                     '''
                 }
             }
