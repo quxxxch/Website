@@ -55,7 +55,7 @@ pipeline {
                 echo 'Releasing to Octopus Deploy...'
                 script {
                     sh '''
-                    /usr/local/bin/octo create-release \
+                    /usr/local/bin/octopus create-release \
                         --server $OCTOPUS_SERVER_URL \
                         --apikey $OCTOPUS_API_KEY \
                         --project "website" \
