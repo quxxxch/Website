@@ -8,13 +8,12 @@ pipeline {
     }
     stages {
 
-        stage('Build') {
-            agent any
-            steps {
-                sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
+        // stage('Build') {
+        //     steps {
+        //         sh '/usr/local/bin/docker build -f Dockerfile -t website:latest .'
 
-            }
-        }
+        //     }
+        // }
         stage('Build') {
             steps {
                 sh 'export PATH=$PATH:/usr/local/bin && docker build -f Dockerfile -t website:latest .'
@@ -40,7 +39,7 @@ pipeline {
         }
         
 
-         stage('Deploy') {
+        stage('Deploy') {
             steps {
                 script {
                     sh '/usr/local/bin/docker run -d --rm -p 3000:3000 --name my_website website:latest'
