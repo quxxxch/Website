@@ -55,7 +55,7 @@ pipeline {
                 echo 'Releasing to Octopus Deploy...'
                 script {
                     sh '''
-                    /usr/local/bin/octopus create-release \
+                    /usr/local/bin/octopus release create \
                         --server "https://quxch.octopus.app/" \
                         --apikey "API-JZFPOQTJYYYXLSP7IAR9NR0EGAJ7TWO" \
                         --project "website" \
