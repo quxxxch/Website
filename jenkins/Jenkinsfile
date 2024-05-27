@@ -75,10 +75,10 @@ pipeline {
                     /usr/local/bin/octopus release create \
                         --project "website" \
                         --releaseNumber "1.0.${BUILD_NUMBER}" \
-                        --space 'Default' \
-                        --package="website:latest"
+                        --package "website:latest" --channel Default --no-prompt
                    
                     '''
+                    
                 }
             }
         }
