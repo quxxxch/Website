@@ -51,11 +51,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerhub_id', url: 'https://index.docker.io/v1/') {
-                        docker.image('website:latest').push()
+                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_HUB_CREDENTIALS') {
+                        sh '/usr/local/bin/docker tag website:latest quxch/website:latest'
+                        sh '/usr/local/bin/docker push quxch/website:latest'
                     }
                 }
-
             }
         }
 
