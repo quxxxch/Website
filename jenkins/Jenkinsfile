@@ -53,7 +53,8 @@ pipeline {
                 }
             }
         }
-        stage('Release') {
+        
+         stage('Release') {
             steps {
                 script {
                     octopusDeploy(
